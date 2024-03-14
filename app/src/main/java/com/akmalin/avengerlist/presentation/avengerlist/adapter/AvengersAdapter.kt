@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.akmalin.avengerlist.base.ViewHolderBinder
 import com.akmalin.avengerlist.data.model.Avenger
 
 class AvengersAdapter: RecyclerView.Adapter<ViewHolder>() {
@@ -30,7 +31,8 @@ class AvengersAdapter: RecyclerView.Adapter<ViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (holder !is)
+        if (holder !is ViewHolderBinder<*>) return
+        (holder as ViewHolderBinder<Avenger>).bind(asyncDataDiffer.currentList[position])
 
     }
 }
