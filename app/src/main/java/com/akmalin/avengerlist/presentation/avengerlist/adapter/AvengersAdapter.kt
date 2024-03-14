@@ -1,5 +1,6 @@
 package com.akmalin.avengerlist.presentation.avengerlist.adapter
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -7,9 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.akmalin.avengerlist.base.ViewHolderBinder
 import com.akmalin.avengerlist.data.model.Avenger
+import com.akmalin.avengerlist.databinding.ItemAvengerBinding
+import com.akmalin.avengerlist.databinding.ItemAvengerGridBinding
 
-class AvengersAdapter: RecyclerView.Adapter<ViewHolder>() {
+class AvengersAdapter (private val listMode: Int = MODE_LIST): RecyclerView.Adapter<ViewHolder>() {
 
+    companion object{
+        const val MODE_LIST = 0
+        const val MODE_GRID = 1
+    }
     private var asyncDataDiffer = AsyncListDiffer(
         this, object : DiffUtil.ItemCallback<Avenger>(){
             override fun areItemsTheSame(oldItem: Avenger, newItem: Avenger): Boolean {
@@ -23,7 +30,21 @@ class AvengersAdapter: RecyclerView.Adapter<ViewHolder>() {
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        return if (listMode == MODE_GRID) AvengerGridItemViewHolder(
+            ItemAvengerGridBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false )
+            ) else {
+                AvengerListItemViewHolder(
+                    ItemAvengerBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+         }
+
     }
 
     override fun getItemCount(): Int = asyncDataDiffer.currentList.size
