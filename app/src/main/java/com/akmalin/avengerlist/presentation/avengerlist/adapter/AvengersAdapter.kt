@@ -30,7 +30,7 @@ class AvengersAdapter: RecyclerView.Adapter<ViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (holder is AvengerGridItemViewHolder)
+        if (holder !is)
 
     }
 }
